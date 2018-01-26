@@ -29,8 +29,13 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
         }
     }
 
+    public int LowFreq  = 150;
+    public int HighFreq = 800;
+    public float ThresholdVolume = 1;
+
     [SerializeField] Text debugText;
     [SerializeField] InputPowerView view;
+    [SerializeField] Player player;
 
     AudioSource audioSource;
 
@@ -49,7 +54,7 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
         while (!(Microphone.GetPosition("") > 0)){ yield return null; }             // マイクが取れるまで待つ。空文字でデフォルトのマイクを探してくれる
         audioSource.Play();                                           // 再生する
 
-        const int windowSize = 1024; // 解像度高くしたかったので256から1024に変更
+        const int windowSize = 256; // 解像度高くしたかったので256から1024に変更
         float[] spectrum = new float[windowSize];
 
         float prevVolume = 0;
@@ -72,16 +77,19 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
             }
 
             var freq = maxIndex * AudioSettings.outputSampleRate / 2 / spectrum.Length;
-            maxValue = maxValue / audioSource.volume < 0.06 ? 0 : maxValue;
+            maxValue = maxValue / audioSource.volume < 0.0513f ? 0 : maxValue; // 無音のときにも0.0512が入る
             var volume = maxValue / audioSource.volume;
             volume = Mathf.Lerp(prevVolume, volume, 0.5f);
             freq = (int)Mathf.Lerp(prevFreq, freq, 0.5f);
 
             debugText.text = string.Format("周波数{0} volume{1:###0.0000}", freq, volume);
 
-            var rate = (volume / audioSource.volume) < 1 ? 0 : Mathf.InverseLerp(150, 2000, freq); // 小さい音を無視
+            var rate = (volume / audioSource.volume) < ThresholdVolume ? 0 : Mathf.InverseLerp(LowFreq, HighFreq, freq); // 小さい音を無視
+
+            //var rate = (volume / audioSource.volume) < 1 ? 0 : Mathf.InverseLerp(150, 2000, freq); // 小さい音を無視
             //var rate = Mathf.InverseLerp(150, 2000, freq); // 小さい音を無視
             view.SetPower(rate);
+            player.Boost(rate);
 
             prevVolume = volume;
             prevFreq = freq;
