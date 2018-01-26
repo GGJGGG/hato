@@ -26,4 +26,16 @@ public class Player : MonoBehaviour
         var power = (addPower - 0.5f) * powerScale;
         transform.position += new Vector3(0, power, 0);
     }
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.RightArrow))
+        {
+            Boost(1);
+        }
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            Boost(0+Time.deltaTime);
+        }
+    }
 }

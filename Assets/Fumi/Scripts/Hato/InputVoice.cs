@@ -32,6 +32,7 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
     public int LowFreq  = 150;
     public int HighFreq = 800;
     public float ThresholdVolume = 1;
+    public float PrevEffectRate = 0;
 
     [SerializeField] Text debugText;
     [SerializeField] InputPowerView view;
@@ -45,6 +46,8 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
     }
 
     // https://qiita.com/niusounds/items/b8858a2b043676185a54
+    // 基音をとるのはこのへん
+    // http://ibako-study.hateblo.jp/entry/2014/02/06/031945
     IEnumerator InputStart()
     {
         audioSource = GetComponent<AudioSource>();
@@ -54,40 +57,47 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
         while (!(Microphone.GetPosition("") > 0)){ yield return null; }             // マイクが取れるまで待つ。空文字でデフォルトのマイクを探してくれる
         audioSource.Play();                                           // 再生する
 
-        const int windowSize = 256; // 解像度高くしたかったので256から1024に変更
+        const int windowSize = 1024; // 解像度高くしたかったので256から1024に変更
         float[] spectrum = new float[windowSize];
 
         float prevVolume = 0;
         var prevFreq = 0;
+        float threshold = 0.04f * audioSource.volume; //ピッチとして検出する最小の分布
 
         while (true)
         {
-            audioSource.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
+            audioSource.GetSpectrumData(spectrum, 0, FFTWindow.BlackmanHarris);
 
             var maxIndex = 0;
             var maxValue = 0.0f;
             for (int i = 0; i < spectrum.Length; i++)
             {
                 var val = spectrum[i];
-                if (val > maxValue)
+                if (val > maxValue && val > threshold)
                 {
                     maxValue = val;
                     maxIndex = i;
                 }
             }
 
-            var freq = maxIndex * AudioSettings.outputSampleRate / 2 / spectrum.Length;
+            float freqN = maxIndex;
+            if (maxIndex > 0 && maxIndex < spectrum.Length - 1)
+            {
+                //隣のスペクトルも考慮する
+                float dL = spectrum[maxIndex - 1] / spectrum[maxIndex];
+                float dR = spectrum[maxIndex + 1] / spectrum[maxIndex];
+                freqN += 0.5f * (dR * dR - dL * dL);
+            }
+
+            var freq = (int)(freqN * AudioSettings.outputSampleRate / 2 / spectrum.Length);
             maxValue = maxValue / audioSource.volume < 0.0513f ? 0 : maxValue; // 無音のときにも0.0512が入る
             var volume = maxValue / audioSource.volume;
-            volume = Mathf.Lerp(prevVolume, volume, 0.5f);
-            freq = (int)Mathf.Lerp(prevFreq, freq, 0.5f);
+            volume = Mathf.Lerp(volume, prevVolume, PrevEffectRate);
+            freq = (int)Mathf.Lerp(freq, prevFreq, PrevEffectRate);
 
             debugText.text = string.Format("周波数{0} volume{1:###0.0000}", freq, volume);
 
             var rate = (volume / audioSource.volume) < ThresholdVolume ? 0 : Mathf.InverseLerp(LowFreq, HighFreq, freq); // 小さい音を無視
-
-            //var rate = (volume / audioSource.volume) < 1 ? 0 : Mathf.InverseLerp(150, 2000, freq); // 小さい音を無視
-            //var rate = Mathf.InverseLerp(150, 2000, freq); // 小さい音を無視
             view.SetPower(rate);
             player.Boost(rate);
 
