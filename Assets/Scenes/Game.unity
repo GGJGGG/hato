@@ -514,7 +514,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LowFreq: 150
   HighFreq: 800
-  ThresholdVolume: 1
+  ThresholdVolume: 0.4
+  PrevEffectRate: 0.5
   debugText: {fileID: 594513592}
   view: {fileID: 1413738515}
   player: {fileID: 2029811661}
@@ -675,7 +676,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 304723876
+  randomSeed: 1724888108
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4309,7 +4310,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -130350313
+  randomSeed: -1536669820
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -8078,5 +8079,5 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
