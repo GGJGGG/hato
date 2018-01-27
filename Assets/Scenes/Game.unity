@@ -15624,7 +15624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerScale: 0.45
-  frontMoveSpeed: 1.1
+  frontMoveSpeed: 0.1
 --- !u!23 &2029811662
 MeshRenderer:
   m_ObjectHideFlags: 0
