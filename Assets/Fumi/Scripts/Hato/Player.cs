@@ -134,7 +134,7 @@ public class Player : MonoBehaviour
     void DebugInput()
     {
         if (!isOperable) return;
-
+        PlayerAnim pAnim = pig.GetComponent<PlayerAnim>();
         if (Input.GetKey(KeyCode.RightArrow))
         {
             frontMoveSpeed += 0.01f;
@@ -148,10 +148,12 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow))
         {
             Boost(1);
+            pAnim.RisingAnim();
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
             Boost(0);
+            pAnim.NormalAnim();
         }
     }
 
