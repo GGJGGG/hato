@@ -9,14 +9,29 @@ public class InputPowerView : MonoBehaviour
     [SerializeField] Button button;
     [SerializeField] Text text;
 
-    public void SetPower(float rate, int freq)
+    void OnEnable()
     {
-        var noInput = rate == 0.0f;
-        var anchor = new Vector2(0.5f, noInput ? 0.5f : rate);
+        if (InputVoice.Instance != null)
+        {
+            InputVoice.Instance.OnUpdateVoiceInput += OnUpdateVoiceInput;
+        }
+    }
+
+    void OnDisable()
+    {
+        if (InputVoice.Instance != null)
+        {
+            InputVoice.Instance.OnUpdateVoiceInput -= OnUpdateVoiceInput;
+        }
+    }
+
+    void OnUpdateVoiceInput(bool isMute, float rate, int freq, float power)
+    {
+        var anchor = new Vector2(0.5f, isMute ? 0.5f : rate);
         rt.anchorMin = anchor;
         rt.anchorMax = anchor;
         rt.anchoredPosition = new Vector3(8f, 0);
-        button.interactable = !noInput;
+        button.interactable = !isMute;
         text.text = string.Format("{0}Hz", freq);
     }
 }
