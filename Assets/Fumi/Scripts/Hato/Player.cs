@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] float powerScale = 10;
-    [SerializeField] float frontMoveSpeed = 10;
+    [SerializeField] float powerScale = 1;
+    [SerializeField] float frontMoveSpeed = 0.1f;
 
     Rigidbody rigid;
 
@@ -14,17 +14,17 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
     }
 
-    void Update()
-    {
-        transform.position += new Vector3(frontMoveSpeed, 0, 0) * Time.deltaTime * 60;
-    }
-
     public void Boost(float addPower)
     {
         if (addPower == 0) return;
 
         var power = (addPower - 0.5f) * powerScale * Time.deltaTime * 60;
         transform.position += new Vector3(0, power, 0);
+    }
+
+    void FixedUpdate()
+    {
+        transform.position += new Vector3(frontMoveSpeed, 0, 0) * Time.fixedDeltaTime * 60;
     }
 
     void Update()
@@ -36,12 +36,12 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            transform.position += new Vector3(frontMoveSpeed * 4, 0, 0) * Time.deltaTime * 60;
+            frontMoveSpeed += 0.1f;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.position += new Vector3(frontMoveSpeed * -4, 0, 0) * Time.deltaTime * 60;
+            frontMoveSpeed -= 0.1f;
         }
 
         if (Input.GetKey(KeyCode.UpArrow))
