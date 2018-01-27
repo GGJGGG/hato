@@ -95,10 +95,13 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
             volume = Mathf.Lerp(volume, prevVolume, PrevEffectRate);
             freq = (int)Mathf.Lerp(freq, prevFreq, PrevEffectRate);
 
-            debugText.text = string.Format("周波数{0} volume{1:###0.0000}", freq, volume);
+            if (debugText != null)
+            {
+                debugText.text = string.Format("周波数{0} volume{1:###0.0000}", freq, volume);
+            }
 
             var rate = (volume / audioSource.volume) < ThresholdVolume ? 0 : Mathf.InverseLerp(LowFreq, HighFreq, freq); // 小さい音を無視
-            view.SetPower(rate);
+            view.SetPower(rate,freq);
             player.Boost(rate);
 
             prevVolume = volume;
