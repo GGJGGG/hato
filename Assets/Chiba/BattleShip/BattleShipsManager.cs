@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleShipsManager : MonoBehaviour {
-    public 
-
+    public GameObject BattleShips;
 	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    private void OnBecameVisible()
+    {
+        BattleShips.GetComponent<BattleShips>().BattleShipsStart();
+    }
 }
