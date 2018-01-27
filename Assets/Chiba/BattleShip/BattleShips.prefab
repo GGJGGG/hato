@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33867436770548798}
   - component: {fileID: 65107316155638936}
   - component: {fileID: 23736018459291412}
+  - component: {fileID: 114509059629055786}
   m_Layer: 0
   m_Name: BattleShips
   m_TagString: Untagged
@@ -95,3 +96,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114509059629055786
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1650771390685898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b418815e950a64540ac66cc6a2215b8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BULLET: {fileID: 0}
+  BulletPosition: {fileID: 0}
+  count: 0
+  Interval: 0
