@@ -15,19 +15,23 @@ public class Player : MonoBehaviour
     [SerializeField] Bomb bomb;
     [SerializeField] AudioClip deadClip;
 
-    public static bool faint = false;
+    public bool faint = false;
 
     bool isOperable; //操作可能かどうか
 
-    MeshRenderer mr;
+    PlayerAnim pAnim;
+    GameObject pl;
+    GameObject pig;
+    Animator _animator;
 
     Rigidbody rigid;
 
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
-        mr = GetComponent<MeshRenderer>();
-
+        _animator = GetComponent<Animator>();
+        pl = GameObject.FindGameObjectWithTag("Player");
+        pig = GameObject.FindGameObjectWithTag("pigeon");
         // TODO あとでタイミング変更するかも
         EnableOperation();
     }
@@ -116,6 +120,7 @@ public class Player : MonoBehaviour
 
         if (faint)
         {
+            rigid.AddForce(new Vector3(0.0f, -1.0f, 0.0f));
             RevivalFaint();
         }
     }
@@ -147,17 +152,21 @@ public class Player : MonoBehaviour
     public void FaintCheck()
     {
         faint = true;
+        PlayerAnim pAnim = pig.GetComponent<PlayerAnim>();
+        pAnim.FiantAnimOn();
     }
 
     void RevivalFaint()
     {
         revivalCount += 1 * Time.deltaTime;
-        mr.material.color = new Color(1.0f, 0.0f, 0.0f, 0.0f);
         if (revivalCount >= revivalLine)
         {
+            ParticlePlaying pp = pl.GetComponent<ParticlePlaying>();
             faint = false;
             revivalCount = 0;
-            mr.material.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+            pp.isPlaying = false;
+            PlayerAnim pAnim = pig.GetComponent<PlayerAnim>();
+            pAnim.FiantAnimOff();
         }
     }
 }
