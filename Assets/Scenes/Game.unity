@@ -4024,8 +4024,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea32361f7a3db4ad2b58dd0704adc61c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LowFreq: 150
-  HighFreq: 800
+  CenterFreq: 350
+  FreqBandNumber: 13
   ThresholdVolume: 0.4
   PrevEffectRate: 0.5
   debugText: {fileID: 0}

@@ -30,8 +30,11 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
         }
     }
 
-    public int LowFreq  = 150;
-    public int HighFreq = 800;
+    public int CenterFreq = 300;
+    public int FreqBandNumber = 13; // Freqの幅は13音分
+    int LowFreq  = 150;
+    int HighFreq = 800;
+
     public float ThresholdVolume = 1;
     public float PrevEffectRate = 0;
 
@@ -47,6 +50,7 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
 
     void Start()
     {
+        SetCenterFreq(CenterFreq);
         StartCoroutine(InputStart());
     }
 
@@ -118,5 +122,16 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
 
             yield return null;
         }
+    }
+
+    /// <summary>
+    /// 判定の中央に使う周波数を登録します。
+    /// </summary>
+    public void SetCenterFreq(int centerFreq)
+    {
+        var rate = Mathf.Pow(1.059f, (FreqBandNumber - 1) / 2.0f);
+
+        LowFreq = (int)(centerFreq / rate);
+        HighFreq = (int)(centerFreq * rate);
     }
 }
