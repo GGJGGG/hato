@@ -12,12 +12,18 @@ public class GameLoop : MonoBehaviour
 
     void OnEnable()
     {
-        GameEventManager.Instance.OnPlayerDead += OnPlayerDead;
+        if (GameEventManager.Instance != null)
+        {
+            GameEventManager.Instance.OnPlayerDead += OnPlayerDead;
+        }
     }
 
     void OnDisable()
     {
-        GameEventManager.Instance.OnPlayerDead -= OnPlayerDead;
+        if (GameEventManager.Instance != null)
+        {
+            GameEventManager.Instance.OnPlayerDead -= OnPlayerDead;
+        }
     }
 
     // ゲームオーバーからGameやり直し。演出込み
