@@ -83,6 +83,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c0f5aca2e5b6df40ab5377202f3a2cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sparkParticle: {fileID: 1566574757032542, guid: 9cafbb84674fa3c479b92e84ffbf5e39,
+    type: 2}
+  sparkPoint:
+  - {fileID: 0}
 --- !u!198 &198988217300167266
 ParticleSystem:
   m_ObjectHideFlags: 1
