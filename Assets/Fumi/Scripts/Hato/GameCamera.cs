@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class GameCamera : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other)
+    void Start()
     {
-        if (other.gameObject.tag == "GoalLine")
+        GameEventManager.Instance.OnEnterGoalLine += () =>
         {
             var sync = GetComponent<SyncPosition>();
             sync.enabled = false;
-        }
+        };
     }
 }

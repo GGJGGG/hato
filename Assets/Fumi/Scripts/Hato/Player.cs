@@ -14,16 +14,16 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        rigid.AddForce(frontMoveSpeed, 0, 0);
+        transform.position += new Vector3(frontMoveSpeed, 0, 0) * Time.deltaTime * 60;
     }
 
     public void Boost(float addPower)
     {
         if (addPower == 0) return;
 
-        var power = (addPower - 0.5f) * powerScale;
+        var power = (addPower - 0.5f) * powerScale * Time.deltaTime * 60;
         transform.position += new Vector3(0, power, 0);
     }
 
@@ -36,12 +36,12 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            rigid.AddForce(2, 0, 0);
+            transform.position += new Vector3(frontMoveSpeed * 4, 0, 0) * Time.deltaTime * 60;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            rigid.AddForce(-2, 0, 0);
+            transform.position += new Vector3(frontMoveSpeed * -4, 0, 0) * Time.deltaTime * 60;
         }
 
         if (Input.GetKey(KeyCode.UpArrow))

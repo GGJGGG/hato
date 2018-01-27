@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bomb
   - GoalLine
+  - LastAreaLine
   layers:
   - Default
   - TransparentFX
