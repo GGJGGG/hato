@@ -22,14 +22,12 @@ public class Player : MonoBehaviour
     PlayerAnim pAnim;
     GameObject pl;
     GameObject pig;
-    Animator _animator;
 
     Rigidbody rigid;
 
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
-        _animator = GetComponent<Animator>();
         pl = GameObject.FindGameObjectWithTag("Player");
         pig = GameObject.FindGameObjectWithTag("pigeon");
         // TODO あとでタイミング変更するかも
