@@ -9,12 +9,15 @@ public class Player : MonoBehaviour
     [SerializeField] float revivalLine;
     [SerializeField] float revivalCount = 0;
     [SerializeField] float heightLimit = 8.6f;
+    [SerializeField] float flyingSeInterval = 0.2f;
     [SerializeField] ParticleSystem trailEffect;
     [SerializeField] ParticleSystem deadEffect;
     [SerializeField] GameObject playerModelRoot;
 
     [SerializeField] Bomb bomb;
     [SerializeField] AudioClip deadClip;
+    [SerializeField] AudioClip upClip;
+    [SerializeField] AudioClip downClip;
 
     public bool faint = false;
 
@@ -25,6 +28,8 @@ public class Player : MonoBehaviour
     GameObject pig;
 
     Rigidbody rigid;
+    AudioSource audio;
+    float prevRingSoundTime;
 
     float reserveMoveHeight;   //移動予定の高さ
 
@@ -33,6 +38,7 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         pl = GameObject.FindGameObjectWithTag("Player");
         pig = GameObject.FindGameObjectWithTag("pigeon");
+        audio = GetComponent<AudioSource>();
         // TODO あとでタイミング変更するかも
         EnableOperation();
     }
@@ -92,7 +98,6 @@ public class Player : MonoBehaviour
     {
         deadEffect.Emit(8);
 
-        var audio = GetComponent<AudioSource>();
         audio.PlayOneShot(deadClip);
     }
 
@@ -106,6 +111,8 @@ public class Player : MonoBehaviour
     {
         var newPos = transform.position;
         var newHeight = Mathf.Min(transform.position.y + reserveMoveHeight, heightLimit);
+        var up = newHeight > newPos.y;
+        var down = newHeight < newPos.y;
         reserveMoveHeight = 0;
         newPos.y = newHeight;
         newPos.x += frontMoveSpeed * Time.fixedDeltaTime * 60;
@@ -115,6 +122,21 @@ public class Player : MonoBehaviour
         if (rigid.velocity.y > 0)
         {
             rigid.velocity *= 0.8f;
+        }
+
+        if (prevRingSoundTime + flyingSeInterval > Time.time)
+            return;
+
+        if (up)
+        {
+            audio.PlayOneShot(upClip);
+            prevRingSoundTime = Time.time;
+        }
+
+        if (down)
+        {
+            audio.PlayOneShot(downClip);
+            prevRingSoundTime = Time.time;
         }
     }
 
