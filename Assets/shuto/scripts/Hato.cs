@@ -25,14 +25,13 @@ public class Hato : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        HatoMove();
-        if (faint == true)
+        if (faint == false)
+        {
+            HatoMove();
+        }
+        else if (faint == true)
         {
             RevivalFaint();
-        }
-        if (faint == true)
-        {
-            mr.material.color = new Color(1.0f, 0.0f, 0.0f, 0.0f);
         }
     }
 
@@ -54,18 +53,17 @@ public class Hato : MonoBehaviour {
     public void FaintCheck ()
     {
         faint = true;
-        Debug.Log("faint");
     }
 
     void RevivalFaint ()
     {
         revivalCount += 1 * Time.deltaTime;
-        if(revivalCount >= revivalLine)
+        mr.material.color = new Color(1.0f, 0.0f, 0.0f, 0.0f);
+        if (revivalCount >= revivalLine)
         {
             faint = false;
             revivalCount = 0;
             mr.material.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
-            Debug.Log("revival");
         }
     }
 }
