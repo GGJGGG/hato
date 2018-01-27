@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ParticlePlaying : MonoBehaviour {
 
-    public static bool isPlaying;
+    public bool isPlaying;
     [SerializeField] ParticleSystem particle;
 
     private void Start()

@@ -8,18 +8,20 @@ public class Player : MonoBehaviour
     [SerializeField] float frontMoveSpeed = 0.1f;
     [SerializeField] float revivalLine;
     [SerializeField] float revivalCount = 0;
-    public static bool faint = false;
+    public bool faint = false;
 
-    private MeshRenderer mr;
-    private GameObject player;
     Rigidbody rigid;
+    PlayerAnim pAnim;
+    GameObject pl;
+    GameObject pig;
+    Animator _animator;
 
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
-        mr = GetComponent<MeshRenderer>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        PlayerAnim pAnim = player.GetComponent<PlayerAnim>();
+        _animator = GetComponent<Animator>();
+        pl = GameObject.FindGameObjectWithTag("Player");
+        pig = GameObject.FindGameObjectWithTag("pigeon");
     }
 
     void OnEnable()
@@ -67,6 +69,7 @@ public class Player : MonoBehaviour
         DebugInput();
         if (faint == true)
         {
+            rigid.AddForce(new Vector3(0.0f, -1.0f, 0.0f));
             RevivalFaint();
         }
     }
@@ -93,22 +96,25 @@ public class Player : MonoBehaviour
         }
     }
 
-    public static void FaintCheck()
+    public void FaintCheck()
     {
         faint = true;
-        //pAnim.FiantAnimOn();
+        PlayerAnim pAnim = pig.GetComponent<PlayerAnim>();
+        pAnim.FiantAnimOn();
     }
+
 
     void RevivalFaint()
     {
         revivalCount += 1 * Time.deltaTime;
-        mr.material.color = new Color(1.0f, 0.0f, 0.0f, 0.0f);
         if (revivalCount >= revivalLine)
         {
+            ParticlePlaying pp = pl.GetComponent<ParticlePlaying>();
             faint = false;
             revivalCount = 0;
-            ParticlePlaying.isPlaying = false;
-            mr.material.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+            pp.isPlaying = false;
+            PlayerAnim pAnim = pig.GetComponent<PlayerAnim>();
+            pAnim.FiantAnimOff();
         }
     }
 }
