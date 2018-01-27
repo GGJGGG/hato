@@ -1616,11 +1616,14 @@ MonoBehaviour:
   revivalLine: 2
   revivalCount: 0
   heightLimit: 8.6
+  flyingSeInterval: 0.148
   trailEffect: {fileID: 198448671555305014}
   deadEffect: {fileID: 198259531100552792}
   playerModelRoot: {fileID: 1139546404726294}
   bomb: {fileID: 0}
   deadClip: {fileID: 8300000, guid: 241b859a210ff44e6b1ca105e350e418, type: 3}
+  upClip: {fileID: 8300000, guid: 769f3ef9e68fb4818bef764cb092bcd8, type: 3}
+  downClip: {fileID: 8300000, guid: 1d806ec16fe0c44e78a6a3b6890dace6, type: 3}
   faint: 0
 --- !u!114 &114804896338103114
 MonoBehaviour:
@@ -2990,7 +2993,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -68609344
+  randomSeed: 1603288169
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6396,7 +6399,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 81133311
+  randomSeed: -1333227589
   InitialModule:
     serializedVersion: 3
     enabled: 1
