@@ -21,7 +21,7 @@ public class Bomb : MonoBehaviour
         {
             goalHitted = true;
         }
-        else if (collision.gameObject.name != "UpperWall") // 暫定で上の壁にあたってもセーフにしてみる対応
+        else
         {
             Debug.Log("ゴール以外にバームクーヘンが当たった " + collision.gameObject.name);
             Dead();

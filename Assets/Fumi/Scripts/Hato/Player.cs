@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] float frontMoveSpeed = 0.1f;
     [SerializeField] float revivalLine;
     [SerializeField] float revivalCount = 0;
+    [SerializeField] float heightLimit = 8.6f;
     [SerializeField] ParticleSystem trailEffect;
     [SerializeField] ParticleSystem deadEffect;
     [SerializeField] GameObject playerModelRoot;
@@ -24,6 +25,8 @@ public class Player : MonoBehaviour
     GameObject pig;
 
     Rigidbody rigid;
+
+    float reserveMoveHeight;   //移動予定の高さ
 
     void Start()
     {
@@ -96,12 +99,17 @@ public class Player : MonoBehaviour
     void Boost(float rate)
     {
         var moveY = (rate - 0.5f) * powerScale * Time.deltaTime * 60;
-        transform.position += new Vector3(0, moveY, 0);
+        reserveMoveHeight += moveY;
     }
 
     void FixedUpdate()
     {
-        transform.position += new Vector3(frontMoveSpeed, 0, 0) * Time.fixedDeltaTime * 60;
+        var newPos = transform.position;
+        var newHeight = Mathf.Min(transform.position.y + reserveMoveHeight, heightLimit);
+        reserveMoveHeight = 0;
+        newPos.y = newHeight;
+        newPos.x += frontMoveSpeed * Time.fixedDeltaTime * 60;
+        transform.position = newPos;
 
         // 地面に反射した反動で、物理挙動的に上向きなどに進んでいたら力を徐々に打ち消す
         if (rigid.velocity.y > 0)
