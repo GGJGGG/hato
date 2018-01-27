@@ -46,7 +46,7 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
     /// </summary>
     public event Action<bool, float, int, float> OnUpdateVoiceInput;
 
-    public event Action<int, int> OnUpdateCenterFreq;
+    public event Action<int, int, int> OnUpdateCenterFreq;
 
     AudioSource audioSource;
 
@@ -138,7 +138,7 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
 
         if (OnUpdateCenterFreq != null)
         {
-            OnUpdateCenterFreq(LowFreq, HighFreq);
+            OnUpdateCenterFreq(LowFreq, centerFreq, HighFreq);
         }
     }
 }
