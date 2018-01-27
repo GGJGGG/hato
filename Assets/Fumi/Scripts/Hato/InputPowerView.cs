@@ -10,6 +10,7 @@ public class InputPowerView : MonoBehaviour
     [SerializeField] Text text;
 
     [SerializeField] Text lowText;
+    [SerializeField] Text centerText;
     [SerializeField] Text highText;
 
     void OnEnable()
@@ -40,14 +41,15 @@ public class InputPowerView : MonoBehaviour
         text.text = ToFreqString(freq);
     }
 
-    void OnUpdateCenterFreq(int lowFreq, int highFreq)
+    void OnUpdateCenterFreq(int lowFreq, int centerFreq, int highFreq)
     {
         lowText.text = ToFreqString(lowFreq);
+        centerText.text = ToFreqString(centerFreq);
         highText.text = ToFreqString(highFreq);
     }
 
     string ToFreqString(int freq)
     {
-        return string.Format("{0}Hz", freq);
+        return freq == 0 ? "" : string.Format("{0}Hz", freq);
     }
 }
