@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,8 +36,12 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
     public float PrevEffectRate = 0;
 
     [SerializeField] Text debugText;
-    [SerializeField] InputPowerView view;
-    [SerializeField] Player player;
+
+    /// <summary>
+    /// Occurs when on voice input update.
+    /// 入力があったかどうか 入力音程の相対的な高さ 周波数 音の強さ
+    /// </summary>
+    public event Action<bool, float, int, float> OnUpdateVoiceInput;
 
     AudioSource audioSource;
 
@@ -100,9 +105,13 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
                 debugText.text = string.Format("周波数{0} volume{1:###0.0000}", freq, volume);
             }
 
-            var rate = (volume / audioSource.volume) < ThresholdVolume ? 0 : Mathf.InverseLerp(LowFreq, HighFreq, freq); // 小さい音を無視
-            view.SetPower(rate,freq);
-            player.Boost(rate);
+            var isVoiceMute = (volume / audioSource.volume) < ThresholdVolume;
+            var rate = isVoiceMute ? 0 : Mathf.InverseLerp(LowFreq, HighFreq, freq); // 小さい音を無視
+
+            if (OnUpdateVoiceInput != null)
+            {
+                OnUpdateVoiceInput(isVoiceMute, rate, freq, volume);
+            }
 
             prevVolume = volume;
             prevFreq = freq;
