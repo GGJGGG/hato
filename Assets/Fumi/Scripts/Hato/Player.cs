@@ -36,12 +36,12 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            frontMoveSpeed += 0.1f;
+            frontMoveSpeed += 0.01f;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            frontMoveSpeed -= 0.1f;
+            frontMoveSpeed -= 0.01f;
         }
 
         if (Input.GetKey(KeyCode.UpArrow))
