@@ -25,6 +25,12 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         transform.position += new Vector3(frontMoveSpeed, 0, 0) * Time.fixedDeltaTime * 60;
+
+        // 地面に反射した反動で、物理挙動的に上向きなどに進んでいたら力を徐々に打ち消す
+        if (rigid.velocity.y > 0)
+        {
+            rigid.velocity *= 0.8f;
+        }
     }
 
     void Update()
