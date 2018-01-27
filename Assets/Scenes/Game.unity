@@ -484,7 +484,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -818795473
+  randomSeed: -1884495336
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4035,7 +4035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ae4892eea0bce4e9df80b4a3fb6c22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BattleShips: {fileID: 0}
+  BattleShips: {fileID: 1335124549}
 --- !u!1001 &943603927
 Prefab:
   m_ObjectHideFlags: 0
@@ -4532,6 +4532,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!1 &1335124549 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1650771390685898, guid: 9ead99ce783674f4e9216eb8fb59bf6f,
+    type: 2}
+  m_PrefabInternal: {fileID: 531193490}
 --- !u!1 &1522634974
 GameObject:
   m_ObjectHideFlags: 0
@@ -4663,7 +4668,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -308897116
+  randomSeed: -1857387444
   InitialModule:
     serializedVersion: 3
     enabled: 1
