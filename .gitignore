@@ -47,6 +47,7 @@ sysinfo.txt #Unity3D Generated File On Crash Reports
 #Editor plugins
 Assets/Plugins/Editor
 Assets/Plugins/Editor.meta
+Assets/Plugins.meta
 
 #VSCode settings
 .vscode
