@@ -14,26 +14,41 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        rigid.AddForce(frontMoveSpeed, 0, 0);
+        transform.position += new Vector3(frontMoveSpeed, 0, 0) * Time.deltaTime * 60;
     }
 
     public void Boost(float addPower)
     {
         if (addPower == 0) return;
 
-        var power = (addPower - 0.5f) * powerScale;
+        var power = (addPower - 0.5f) * powerScale * Time.deltaTime * 60;
         transform.position += new Vector3(0, power, 0);
     }
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.RightArrow))
+        DebugInput();
+    }
+
+    void DebugInput()
+    {
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            transform.position += new Vector3(frontMoveSpeed * 4, 0, 0) * Time.deltaTime * 60;
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.position += new Vector3(frontMoveSpeed * -4, 0, 0) * Time.deltaTime * 60;
+        }
+
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             Boost(1);
         }
-        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             Boost(0+Time.deltaTime);
         }
