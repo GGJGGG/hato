@@ -20,10 +20,10 @@ public class EWDamage : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player")
         {
-            Hato h = hato.GetComponent<Hato>();
-            if (Hato.faint == false)
+            Player p = hato.GetComponent<Player>();
+            if (Player.faint == false)
             {
-                h.FaintCheck();
+                p.FaintCheck();
             }
         }
     }

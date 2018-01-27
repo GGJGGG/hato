@@ -25,8 +25,11 @@ public class Hato : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        HatoMove();
-        if (faint == true)
+        if (faint == false)
+        {
+            HatoMove();
+        }
+        else if (faint == true)
         {
             RevivalFaint();
         }
