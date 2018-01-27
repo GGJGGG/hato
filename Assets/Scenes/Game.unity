@@ -7790,6 +7790,64 @@ Transform:
   m_PrefabParentObject: {fileID: 4850283049530092, guid: b0630ab276b52d64987c62eb030b6fc7,
     type: 2}
   m_PrefabInternal: {fileID: 943603927}
+--- !u!1001 &1195017776
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 114045479999531638, guid: fb27df41654ed41469357f073b6bc458,
+        type: 2}
+      propertyPath: sparkPoint.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991661066552220, guid: fb27df41654ed41469357f073b6bc458, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 5.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991661066552220, guid: fb27df41654ed41469357f073b6bc458, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -2.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991661066552220, guid: fb27df41654ed41469357f073b6bc458, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991661066552220, guid: fb27df41654ed41469357f073b6bc458, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991661066552220, guid: fb27df41654ed41469357f073b6bc458, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991661066552220, guid: fb27df41654ed41469357f073b6bc458, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991661066552220, guid: fb27df41654ed41469357f073b6bc458, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991661066552220, guid: fb27df41654ed41469357f073b6bc458, type: 2}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 114045479999531638, guid: fb27df41654ed41469357f073b6bc458,
+        type: 2}
+      propertyPath: sparkParticle
+      value: 
+      objectReference: {fileID: 1546323920971712, guid: ad12c141fe94c0c45bf1e35e0e7f4d3f,
+        type: 2}
+    - target: {fileID: 114045479999531638, guid: fb27df41654ed41469357f073b6bc458,
+        type: 2}
+      propertyPath: sparkPoint.Array.data[0]
+      value: 
+      objectReference: {fileID: 2029811665}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: fb27df41654ed41469357f073b6bc458, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1242408888
 GameObject:
   m_ObjectHideFlags: 0
@@ -15403,7 +15461,7 @@ GameObject:
   - component: {fileID: 2029811667}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15420,7 +15478,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerScale: 0.45
-  frontMoveSpeed: 0.1
+  frontMoveSpeed: 0
+  revivalLine: 0
+  revivalCount: 0
 --- !u!23 &2029811662
 MeshRenderer:
   m_ObjectHideFlags: 0
