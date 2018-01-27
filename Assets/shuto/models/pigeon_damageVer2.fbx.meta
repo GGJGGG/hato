@@ -1,92 +1,102 @@
 fileFormatVersion: 2
-guid: 06f4ad1855f646d428d128ec8c83d5ee
-timeCreated: 1517063667
+guid: f05bc7d54418c27488ddbf4183de1fd0
+timeCreated: 1517066872
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: beak
     100002: beak 1
-    100004: body
-    100006: body1
-    100008: bolt
-    100010: eye
-    100012: head
-    100014: L_clawA
-    100016: L_clawB
-    100018: L_clawC
-    100020: L_Leg1
-    100022: L_leg1
-    100024: L_Leg2
-    100026: L_leg2
-    100028: L_leg3
-    100030: L_leg5
-    100032: L_LegJointA
-    100034: L_LegJointB
-    100036: L_Wing1
-    100038: L_Wing2
-    100040: leg
-    100042: leg 1
-    100044: neck
-    100046: //RootNode
-    100048: R_clawA
-    100050: R_clawB
-    100052: R_clawC
-    100054: R_Leg1
-    100056: R_leg1
-    100058: R_Leg2
-    100060: R_leg2
-    100062: R_leg3
-    100064: R_leg5
-    100066: R_LegJointA
-    100068: R_LegJointB
-    100070: R_Wing1
-    100072: R_Wing2
-    100074: vernier
-    100076: Wing_joint
-    100078: Wing_L
-    100080: Wing_L1
+    100004: beak2
+    100006: body
+    100008: body1
+    100010: bolt
+    100012: eye
+    100014: head
+    100016: L_clawA
+    100018: L_clawB
+    100020: L_clawC
+    100022: L_Leg1
+    100024: L_leg1
+    100026: L_Leg2
+    100028: L_leg2
+    100030: L_leg3
+    100032: L_leg4
+    100034: L_leg5
+    100036: L_leg6
+    100038: L_LegJointA
+    100040: L_LegJointB
+    100042: L_Wing1
+    100044: L_Wing2
+    100046: leg
+    100048: leg 1
+    100050: neck
+    100052: //RootNode
+    100054: R_clawA
+    100056: R_clawB
+    100058: R_clawC
+    100060: R_Leg1
+    100062: R_leg1
+    100064: R_Leg2
+    100066: R_leg2
+    100068: R_leg3
+    100070: R_leg4
+    100072: R_leg5
+    100074: R_leg6
+    100076: R_LegJointA
+    100078: R_LegJointB
+    100080: R_Wing1
+    100082: R_Wing2
+    100084: vernier
+    100086: Wing_joint
+    100088: Wing_L
+    100090: Wing_L1
     400000: beak
     400002: beak 1
-    400004: body
-    400006: body1
-    400008: bolt
-    400010: eye
-    400012: head
-    400014: L_clawA
-    400016: L_clawB
-    400018: L_clawC
-    400020: L_Leg1
-    400022: L_leg1
-    400024: L_Leg2
-    400026: L_leg2
-    400028: L_leg3
-    400030: L_leg5
-    400032: L_LegJointA
-    400034: L_LegJointB
-    400036: L_Wing1
-    400038: L_Wing2
-    400040: leg
-    400042: leg 1
-    400044: neck
-    400046: //RootNode
-    400048: R_clawA
-    400050: R_clawB
-    400052: R_clawC
-    400054: R_Leg1
-    400056: R_leg1
-    400058: R_Leg2
-    400060: R_leg2
-    400062: R_leg3
-    400064: R_leg5
-    400066: R_LegJointA
-    400068: R_LegJointB
-    400070: R_Wing1
-    400072: R_Wing2
-    400074: vernier
-    400076: Wing_joint
-    400078: Wing_L
-    400080: Wing_L1
+    400004: beak2
+    400006: body
+    400008: body1
+    400010: bolt
+    400012: eye
+    400014: head
+    400016: L_clawA
+    400018: L_clawB
+    400020: L_clawC
+    400022: L_Leg1
+    400024: L_leg1
+    400026: L_Leg2
+    400028: L_leg2
+    400030: L_leg3
+    400032: L_leg4
+    400034: L_leg5
+    400036: L_leg6
+    400038: L_LegJointA
+    400040: L_LegJointB
+    400042: L_Wing1
+    400044: L_Wing2
+    400046: leg
+    400048: leg 1
+    400050: neck
+    400052: //RootNode
+    400054: R_clawA
+    400056: R_clawB
+    400058: R_clawC
+    400060: R_Leg1
+    400062: R_leg1
+    400064: R_Leg2
+    400066: R_leg2
+    400068: R_leg3
+    400070: R_leg4
+    400072: R_leg5
+    400074: R_leg6
+    400076: R_LegJointA
+    400078: R_LegJointB
+    400080: R_Wing1
+    400082: R_Wing2
+    400084: vernier
+    400086: Wing_joint
+    400088: Wing_L
+    400090: Wing_L1
     2100000: lambert1
     4300000: body
     4300002: Wing_joint
@@ -112,7 +122,7 @@ ModelImporter:
     4300042: R_LegJointB
     4300044: R_LegJointA
     4300046: Wing_L1
-    7400000: Fly
+    7400000: Faint
     9500000: //RootNode
     13700000: beak
     13700002: body
@@ -166,17 +176,17 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Fly
+      name: Faint
       takeName: Take 001
       firstFrame: 1
-      lastFrame: 72
+      lastFrame: 24
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
