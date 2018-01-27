@@ -172,7 +172,8 @@ public class Player : MonoBehaviour
             revivalCount = 0;
             pp.isPlaying = false;
             PlayerAnim pAnim = pig.GetComponent<PlayerAnim>();
-            pAnim.FiantAnimOff();
+            pAnim.FiantAnimOff();      
+            rigid.velocity = Vector3.zero;
         }
     }
 }
