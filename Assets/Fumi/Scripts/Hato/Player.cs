@@ -29,11 +29,26 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.RightArrow))
+        DebugInput();
+    }
+
+    void DebugInput()
+    {
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            rigid.AddForce(2, 0, 0);
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            rigid.AddForce(-2, 0, 0);
+        }
+
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             Boost(1);
         }
-        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             Boost(0+Time.deltaTime);
         }
