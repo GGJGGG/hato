@@ -218,7 +218,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &502425902
+--- !u!1001 &448056041
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -484,7 +484,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2075562170
+  randomSeed: -818795473
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4281,11 +4281,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4824492826497900, guid: 2ed780648a1a845fcadbc1e3037f7454, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.84
       objectReference: {fileID: 0}
     - target: {fileID: 4824492826497900, guid: 2ed780648a1a845fcadbc1e3037f7454, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 5.7
+      value: 5.73
       objectReference: {fileID: 0}
     - target: {fileID: 4824492826497900, guid: 2ed780648a1a845fcadbc1e3037f7454, type: 2}
       propertyPath: m_LocalPosition.z
