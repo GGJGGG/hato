@@ -16,6 +16,8 @@ public class TitleSceneManager : MonoBehaviour
 
     GameObject text;
 
+    GameObject shout;
+
     TitleState state = TitleState.DisplayingStory;
 
     public void OnSkipStory()
@@ -25,7 +27,9 @@ public class TitleSceneManager : MonoBehaviour
             return;
         }
 
-        // TODO: 叫べ！ まで行く
+        state = TitleState.WaitingForShout;
+        shout.SetActive(true);
+        story.SetActive(false);
     }
 
     void Start()
@@ -33,6 +37,8 @@ public class TitleSceneManager : MonoBehaviour
         logo = GameObject.Find("Logo");
         text = GameObject.Find("Text");
         story = GameObject.Find("Story");
+        shout = GameObject.Find("Shout");
+        shout.SetActive(false);
     }
 
     void Update()
