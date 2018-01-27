@@ -5,10 +5,33 @@ using UnityEngine.UI;
 
 public class InputPowerView : MonoBehaviour
 {
-    [SerializeField] Image fillImage;
+    [SerializeField] RectTransform rt;
+    [SerializeField] Button button;
+    [SerializeField] Text text;
 
-    public void SetPower(float rate)
+    void OnEnable()
     {
-        fillImage.fillAmount = rate;
+        if (InputVoice.Instance != null)
+        {
+            InputVoice.Instance.OnUpdateVoiceInput += OnUpdateVoiceInput;
+        }
+    }
+
+    void OnDisable()
+    {
+        if (InputVoice.Instance != null)
+        {
+            InputVoice.Instance.OnUpdateVoiceInput -= OnUpdateVoiceInput;
+        }
+    }
+
+    void OnUpdateVoiceInput(bool isMute, float rate, int freq, float power)
+    {
+        var anchor = new Vector2(0.5f, isMute ? 0.5f : rate);
+        rt.anchorMin = anchor;
+        rt.anchorMax = anchor;
+        rt.anchoredPosition = new Vector3(8f, 0);
+        button.interactable = !isMute;
+        text.text = string.Format("{0}Hz", freq);
     }
 }

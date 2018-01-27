@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
     [SerializeField] float revivalLine;
     [SerializeField] float revivalCount = 0;
 
-
     public static bool faint = false;
 
     MeshRenderer mr;
@@ -22,12 +21,33 @@ public class Player : MonoBehaviour
         mr = GetComponent<MeshRenderer>();
     }
 
-    public void Boost(float addPower)
+    void OnEnable()
     {
-        if (addPower == 0) return;
+        if (InputVoice.Instance != null)
+        {
+            InputVoice.Instance.OnUpdateVoiceInput += OnUpdateVoiceInput;
+        }
+    }
 
-        var power = (addPower - 0.5f) * powerScale * Time.deltaTime * 60;
-        transform.position += new Vector3(0, power, 0);
+    void OnDisable()
+    {
+        if (InputVoice.Instance != null)
+        {
+            InputVoice.Instance.OnUpdateVoiceInput -= OnUpdateVoiceInput;
+        }
+    }
+
+    void OnUpdateVoiceInput(bool isMute, float rate, int freq, float power)
+    {
+        if (isMute) return;
+
+        Boost(rate);
+    }
+
+    void Boost(float rate)
+    {
+        var moveY = (rate - 0.5f) * powerScale * Time.deltaTime * 60;
+        transform.position += new Vector3(0, moveY, 0);
     }
 
     void FixedUpdate()
@@ -71,7 +91,7 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            Boost(0+Time.deltaTime);
+            Boost(0);
         }
     }
 
