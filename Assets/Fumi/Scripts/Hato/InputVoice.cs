@@ -101,7 +101,7 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
             }
 
             var freq = (int)(freqN * AudioSettings.outputSampleRate / 2 / spectrum.Length);
-            maxValue = maxValue / audioSource.volume < 0.0513f ? 0 : maxValue; // 無音のときにも0.0512が入る
+            maxValue = maxValue / audioSource.volume < 0.0650f ? 0 : maxValue; // 無音のときにもmacで0.0512が入る winで650くらいが安定してた
             var volume = maxValue / audioSource.volume;
             volume = Mathf.Lerp(volume, prevVolume, PrevEffectRate);
             freq = (int)Mathf.Lerp(freq, prevFreq, PrevEffectRate);
