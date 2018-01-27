@@ -8,17 +8,18 @@ public class Player : MonoBehaviour
     [SerializeField] float frontMoveSpeed = 0.1f;
     [SerializeField] float revivalLine;
     [SerializeField] float revivalCount = 0;
-
     public static bool faint = false;
 
-    MeshRenderer mr;
-
+    private MeshRenderer mr;
+    private GameObject player;
     Rigidbody rigid;
 
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
         mr = GetComponent<MeshRenderer>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        PlayerAnim pAnim = player.GetComponent<PlayerAnim>();
     }
 
     void OnEnable()
@@ -63,11 +64,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (faint == false)
-        {
-            DebugInput();
-        }
-        else if (faint == true)
+        DebugInput();
+        if (faint == true)
         {
             RevivalFaint();
         }
@@ -95,9 +93,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void FaintCheck()
+    public static void FaintCheck()
     {
         faint = true;
+        //pAnim.FiantAnimOn();
     }
 
     void RevivalFaint()
@@ -108,6 +107,7 @@ public class Player : MonoBehaviour
         {
             faint = false;
             revivalCount = 0;
+            ParticlePlaying.isPlaying = false;
             mr.material.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         }
     }

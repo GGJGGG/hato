@@ -5,8 +5,8 @@ using UnityEngine;
 public class SparkParticle : MonoBehaviour {
 
     private GameObject ht;
-    [SerializeField] GameObject sparkParticle;
-    [SerializeField] Transform[] sparkPoint;
+    //[SerializeField] GameObject sparkParticle;
+    //[SerializeField] Transform[] sparkPoint;
 
     // Use this for initialization
     void Start () {
@@ -15,22 +15,23 @@ public class SparkParticle : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
-	}
+
+    }
 
     void OnParticleCollision(GameObject other)
     {
         if (other.gameObject.tag == "Player")
         {
-            Player p = ht.GetComponent<Player>();
+            Player pl = ht.GetComponent<Player>();
             if (Player.faint == false)
             {
-                p.FaintCheck();
-                foreach (Transform sparkPos in sparkPoint)
-                {
-                    GameObject spark = Instantiate(sparkParticle, sparkPos.position, transform.rotation) as GameObject;
-                    Destroy(spark, 1f);
-                }
+                Player.FaintCheck();
+                ParticlePlaying.isPlaying = true;
+                //foreach (Transform sparkPos in sparkPoint)
+                //{
+                //    GameObject spark = Instantiate(sparkParticle, sparkPos.position, transform.rotation) as GameObject;
+                //    Destroy(spark, 1f);
+                //}
             }
         }
     }
