@@ -26,6 +26,13 @@ public class GameSoundManager : MonoBehaviour
             //TODO フェードアウトとかしたほうが良さそう
             bgm2.Stop();
         };
+
+        GameEventManager.Instance.OnPlayerDead += () => 
+        {
+            bgm1.Stop();
+            fill.Stop();
+            bgm2.Stop();
+        };
     }
 
     void PlayBgm2()
