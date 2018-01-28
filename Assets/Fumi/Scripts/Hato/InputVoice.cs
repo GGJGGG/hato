@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(AudioSource))]
 public class InputVoice : SingletonMonoBehaviour<InputVoice>
 {
     public class NoteNameDetector
@@ -37,7 +38,7 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
     int LowFreq  = 150;
     int HighFreq = 800;
 
-    public float ThresholdVolume = 1;
+    public float ThresholdVolume = 0.4f;
     public float PrevEffectRate = 0;
     float avarageFreq;
 
@@ -77,6 +78,7 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
 
         audioSource.clip = Microphone.Start(null, true, 10, 44100);  // マイク名、ループするかどうか、AudioClipの秒数、サンプリングレート を指定する
         audioSource.loop = true;
+        audioSource.volume = 0.001f;
         while (!(Microphone.GetPosition("") > 0)){ yield return null; }             // マイクが取れるまで待つ。空文字でデフォルトのマイクを探してくれる
         audioSource.Play();                                           // 再生する
 
