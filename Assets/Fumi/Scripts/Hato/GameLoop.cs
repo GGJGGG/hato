@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class GameLoop : MonoBehaviour
 {
     [SerializeField] float onPlayerDeadWaitSec = 2.0f;
+    [SerializeField] bool enableAutoAdjustFreqArea = true;
 
     void OnEnable()
     {
@@ -29,6 +30,10 @@ public class GameLoop : MonoBehaviour
     // ゲームオーバーからGameやり直し。演出込み
     void OnPlayerDead()
     {
+        if (enableAutoAdjustFreqArea)
+        {
+            InputVoice.Instance.SaveAvarageFreq();
+        }
         StartCoroutine(PlayerDeadProgress());
     }
 

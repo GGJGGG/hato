@@ -52,3 +52,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onPlayerDeadWaitSec: 2
+  enableAutoAdjustFreqArea: 1
