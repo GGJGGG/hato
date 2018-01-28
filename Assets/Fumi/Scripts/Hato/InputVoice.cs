@@ -112,7 +112,7 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
             }
 
             var isVoiceMute = (volume / audioSource.volume) < ThresholdVolume;
-            var rate = isVoiceMute ? 0 : Mathf.InverseLerp(LowFreq, HighFreq, freq); // 小さい音を無視
+            var rate = isVoiceMute ? 0 : Mathf.InverseLerp(Mathf.Log(LowFreq, 2), Mathf.Log(HighFreq, 2), Mathf.Log(freq, 2)); // 小さい音を無視
 
             if (OnUpdateVoiceInput != null)
             {
