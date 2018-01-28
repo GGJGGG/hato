@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         pl = GameObject.FindGameObjectWithTag("Player");
         pig = GameObject.FindGameObjectWithTag("pigeon");
+        pAnim = pig.GetComponent<PlayerAnim>();
         audio = GetComponent<AudioSource>();
         // TODO あとでタイミング変更するかも
         EnableOperation();
@@ -124,19 +125,29 @@ public class Player : MonoBehaviour
             rigid.velocity *= 0.8f;
         }
 
-        if (prevRingSoundTime + flyingSeInterval > Time.time)
-            return;
+        var ringSound = prevRingSoundTime + flyingSeInterval > Time.time;
 
         if (up)
         {
-            audio.PlayOneShot(upClip);
-            prevRingSoundTime = Time.time;
+            pAnim.RisingAnim();
+            if (ringSound)
+            {
+                audio.PlayOneShot(upClip);
+                prevRingSoundTime = Time.time;
+            }
+        }
+        else
+        {
+            pAnim.NormalAnim();
         }
 
         if (down)
         {
-            audio.PlayOneShot(downClip);
-            prevRingSoundTime = Time.time;
+            if (ringSound)
+            {
+                audio.PlayOneShot(downClip);
+                prevRingSoundTime = Time.time;
+            }
         }
     }
 
@@ -156,7 +167,7 @@ public class Player : MonoBehaviour
     void DebugInput()
     {
         if (!isOperable) return;
-        PlayerAnim pAnim = pig.GetComponent<PlayerAnim>();
+
         if (Input.GetKey(KeyCode.RightArrow))
         {
             frontMoveSpeed += 0.01f;
@@ -170,12 +181,10 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow))
         {
             Boost(1);
-            pAnim.RisingAnim();
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
             Boost(0);
-            pAnim.NormalAnim();
         }
     }
 
