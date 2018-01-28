@@ -66,10 +66,15 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator ClearProgress()
     {
-        audio.PlayOneShot(clearClip);
+        var go = new GameObject("clear_jingle");
+        var ac = go.AddComponent<AudioSource>();
+        ac.clip = clearClip;
+        ac.Play();
+        DontDestroyOnLoad(go);
+        Destroy(go, clearClip.length + 1);
 
-        Time.timeScale = 0.2f;
-        yield return new WaitForSecondsRealtime(1.0f);
+        Time.timeScale = 0.1f;
+        yield return new WaitForSecondsRealtime(1.5f);
         Time.timeScale = 1.0f;
 
         yield return new WaitForSeconds(onClearWaitSec);

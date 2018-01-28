@@ -134,5 +134,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onPlayerDeadWaitSec: 2
   enableAutoAdjustFreqArea: 0
-  onClearWaitSec: 2
+  onClearWaitSec: 1
   clearClip: {fileID: 8300000, guid: 06a6b17a15bcb48578ddc1d2f5d4bcab, type: 3}
