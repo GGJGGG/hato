@@ -20,5 +20,7 @@ public class MissilesMove : MonoBehaviour {
         rb.rotation = Quaternion.identity;
         var col = GetComponent<Collider>();
         col.enabled = false;
+
+        GetComponent<AudioSource>().Play();
     }
 }
