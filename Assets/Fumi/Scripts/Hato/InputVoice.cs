@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(AudioSource))]
 public class InputVoice : SingletonMonoBehaviour<InputVoice>
 {
     public class NoteNameDetector
@@ -30,13 +31,16 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
         }
     }
 
+    static int nextCenterFreq;
+
     public int CenterFreq = 300;
     public int FreqBandNumber = 13; // Freqの幅は13音分
     int LowFreq  = 150;
     int HighFreq = 800;
 
-    public float ThresholdVolume = 1;
+    public float ThresholdVolume = 0.4f;
     public float PrevEffectRate = 0;
+    float avarageFreq;
 
     [SerializeField] Text debugText;
 
@@ -52,7 +56,16 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
 
     void Start()
     {
-        SetCenterFreq(CenterFreq);
+        if (nextCenterFreq == 0)
+        {
+            nextCenterFreq = CenterFreq;
+        }
+        else
+        {
+            avarageFreq = nextCenterFreq;
+        }
+
+        SetCenterFreq(nextCenterFreq);
         StartCoroutine(InputStart());
     }
 
@@ -65,6 +78,7 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
 
         audioSource.clip = Microphone.Start(null, true, 10, 44100);  // マイク名、ループするかどうか、AudioClipの秒数、サンプリングレート を指定する
         audioSource.loop = true;
+        audioSource.volume = 0.001f;
         while (!(Microphone.GetPosition("") > 0)){ yield return null; }             // マイクが取れるまで待つ。空文字でデフォルトのマイクを探してくれる
         audioSource.Play();                                           // 再生する
 
@@ -101,7 +115,7 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
             }
 
             var freq = (int)(freqN * AudioSettings.outputSampleRate / 2 / spectrum.Length);
-            maxValue = maxValue / audioSource.volume < 0.0513f ? 0 : maxValue; // 無音のときにも0.0512が入る
+            maxValue = maxValue / audioSource.volume < 0.0650f ? 0 : maxValue; // 無音のときにもmacで0.0512が入る winで650くらいが安定してた
             var volume = maxValue / audioSource.volume;
             volume = Mathf.Lerp(volume, prevVolume, PrevEffectRate);
             freq = (int)Mathf.Lerp(freq, prevFreq, PrevEffectRate);
@@ -112,7 +126,13 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
             }
 
             var isVoiceMute = (volume / audioSource.volume) < ThresholdVolume;
-            var rate = isVoiceMute ? 0 : Mathf.InverseLerp(LowFreq, HighFreq, freq); // 小さい音を無視
+
+            var rate = isVoiceMute ? 0 : Mathf.InverseLerp(Mathf.Log(LowFreq, 2), Mathf.Log(HighFreq, 2), Mathf.Log(freq, 2)); // 小さい音を無視
+
+            if (!isVoiceMute)
+            {
+                avarageFreq = Mathf.Lerp(avarageFreq, freq, 0.2f);
+            }
 
             if (OnUpdateVoiceInput != null)
             {
@@ -140,5 +160,15 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
         {
             OnUpdateCenterFreq(LowFreq, centerFreq, HighFreq);
         }
+    }
+
+    public void SaveCenterFreq(int centerFreq)
+    {
+        nextCenterFreq = centerFreq;
+    }
+
+    public void SaveAvarageFreq()
+    {
+        nextCenterFreq = (int)avarageFreq;
     }
 }

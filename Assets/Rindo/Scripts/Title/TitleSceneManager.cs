@@ -10,29 +10,34 @@ public class TitleSceneManager : MonoBehaviour
         DisplayingStory, WaitingForShout, Transitioning
     }
 
-    GameObject logo;
+    [SerializeField] GameObject logo;
 
-    GameObject story;
+    [SerializeField] GameObject story;
 
-    GameObject text;
+    [SerializeField] GameObject text;
+
+    [SerializeField] GameObject shout;
 
     TitleState state = TitleState.DisplayingStory;
 
     public void OnSkipStory()
     {
-        if (state != TitleState.DisplayingStory)
-        {
-            return;
-        }
+        WaitForShout();
+    }
 
-        // TODO: 叫べ！ まで行く
+    void OnUpdateVoiceInput(bool isMute, float rate, int freq, float power)
+    {
+        if (state != TitleState.WaitingForShout) return;
+        if (isMute) return;
+
+        InputVoice.Instance.SaveCenterFreq(freq);
+
+        TransitionScene();
     }
 
     void Start()
     {
-        logo = GameObject.Find("Logo");
-        text = GameObject.Find("Text");
-        story = GameObject.Find("Story");
+        shout.SetActive(false);
     }
 
     void Update()
@@ -53,20 +58,41 @@ public class TitleSceneManager : MonoBehaviour
     {
         story.transform.Translate(0, 0, 0.05f);
 
-        if (story.transform.position.z > 30)
+        if (story.transform.position.z > 25)
         {
-            // TODO: フェードアウト処理
+            if (logo != null && !logo.GetComponent<FadeOut>().hasStarted)
+            {
+                logo.GetComponent<FadeOut>().StartFadeOut();
+            }
         }
 
-        // TODO: とりあえずの処理なので正常にシーン遷移のロジック組む
         if (story.transform.position.z > 60)
         {
-            TransitionScene();
+            if (text != null && !text.GetComponent<FadeOut>().hasStarted)
+            {
+                text.GetComponent<FadeOut>().StartFadeOut();
+            }
+            WaitForShout();
         }
+    }
+
+    void WaitForShout()
+    {
+        if (state != TitleState.DisplayingStory) return;
+
+        state = TitleState.WaitingForShout;
+        shout.SetActive(true);
+        story.SetActive(false);
+
+        InputVoice.Instance.OnUpdateVoiceInput += OnUpdateVoiceInput;
     }
 
     void TransitionScene()
     {
+        state = TitleState.Transitioning;
+
+        // TODO: 画面フェード？
+
         SceneManager.LoadScene("Game");
     }
 }

@@ -23,4 +23,11 @@ public class ParticlePlaying : MonoBehaviour {
             particle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         }
     }
+
+    public void PlayParticle()
+    {
+        isPlaying = true;
+        var audio = particle.GetComponent<AudioSource>();
+        audio.PlayOneShot(audio.clip);
+    }
 }
