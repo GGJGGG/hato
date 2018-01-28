@@ -10,13 +10,13 @@ public class TitleSceneManager : MonoBehaviour
         DisplayingStory, WaitingForShout, Transitioning
     }
 
-    GameObject logo;
+    [SerializeField] GameObject logo;
 
-    GameObject story;
+    [SerializeField] GameObject story;
 
-    GameObject text;
+    [SerializeField] GameObject text;
 
-    GameObject shout;
+    [SerializeField] GameObject shout;
 
     TitleState state = TitleState.DisplayingStory;
 
@@ -34,10 +34,6 @@ public class TitleSceneManager : MonoBehaviour
 
     void Start()
     {
-        logo = GameObject.Find("Logo");
-        text = GameObject.Find("Text");
-        story = GameObject.Find("Story");
-        shout = GameObject.Find("Shout");
         shout.SetActive(false);
     }
 
@@ -59,14 +55,20 @@ public class TitleSceneManager : MonoBehaviour
     {
         story.transform.Translate(0, 0, 0.05f);
 
-        if (story.transform.position.z > 30)
+        if (story.transform.position.z > 25)
         {
-            // TODO: フェードアウト処理
+            if (logo != null && !logo.GetComponent<FadeOut>().hasStarted)
+            {
+                logo.GetComponent<FadeOut>().StartFadeOut();
+            }
         }
 
-        // TODO: とりあえずの処理なので正常にシーン遷移のロジック組む
         if (story.transform.position.z > 60)
         {
+            if (text != null && !text.GetComponent<FadeOut>().hasStarted)
+            {
+                text.GetComponent<FadeOut>().StartFadeOut();
+            }
             TransitionScene();
         }
     }
