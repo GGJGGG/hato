@@ -58,7 +58,7 @@ public class TitleSceneManager : MonoBehaviour
             if (logo.transform.position.z > 25 && !logo.GetComponent<FadeOut>().hasStarted)
             {
                 logo.GetComponent<FadeOut>().StartFadeOut();
-                speed = 0.03f;
+                speed = 0.02f;
             }
         }
 
