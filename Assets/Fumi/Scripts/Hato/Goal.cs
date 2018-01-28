@@ -9,16 +9,7 @@ public class Goal : MonoBehaviour
         if (collision.gameObject.tag == "Bomb")
         {
             Debug.Log("ゴールにバームクーヘンが当たった");
-            var bomb = collision.gameObject.GetComponent<Bomb>();
-            bomb.Detach();
-            bomb.PlayClearEffect();
-            Time.timeScale = 0.2f;
-            Invoke("ResetTimeScale", 0.2f);
+            GameEventManager.Instance.GoalBomb();
         }
-    }
-
-    void ResetTimeScale()
-    {
-        Time.timeScale = 1;
     }
 }
