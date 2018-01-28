@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField] AudioClip downClip;
 
     public bool faint = false;
+    public bool hitMissile = false;
 
     bool isOperable; //操作可能かどうか
 
@@ -47,6 +48,21 @@ public class Player : MonoBehaviour
     public void EnableOperation()
     {
         isOperable = true;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Missle"))
+        {
+            hitMissile = true;
+            Invoke("RecoverHitMissile", 2.0f);
+        }
+    }
+
+    void RecoverHitMissile()
+    {
+        hitMissile = false;
+        pAnim.RisingAnim();
     }
 
     void OnEnable()
@@ -119,10 +135,11 @@ public class Player : MonoBehaviour
         newPos.x += frontMoveSpeed * Time.fixedDeltaTime * 60;
         transform.position = newPos;
 
-        // 地面に反射した反動で、物理挙動的に上向きなどに進んでいたら力を徐々に打ち消す
-        if (rigid.velocity.y > 0)
+        // 地面に反射した反動や、ミサイルの反動で、物理挙動的に上向きや左向きに進んでいたら力を徐々に打ち消す
+        // ミサイルに当たってしばらくは打ち消さない
+        if (!hitMissile && (rigid.velocity.y > 0 || rigid.velocity.x < 0))
         {
-            rigid.velocity *= 0.8f;
+            rigid.velocity *= 0.5f;
         }
 
         var ringSound = prevRingSoundTime + flyingSeInterval > Time.time;

@@ -7,6 +7,8 @@ TagManager:
   - Bomb
   - GoalLine
   - LastAreaLine
+  - pigeon
+  - Missile
   layers:
   - Default
   - TransparentFX
