@@ -30,6 +30,8 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
         }
     }
 
+    static int nextCenterFreq;
+
     public int CenterFreq = 300;
     public int FreqBandNumber = 13; // Freqの幅は13音分
     int LowFreq  = 150;
@@ -37,6 +39,7 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
 
     public float ThresholdVolume = 1;
     public float PrevEffectRate = 0;
+    float avarageFreq;
 
     [SerializeField] Text debugText;
 
@@ -52,7 +55,16 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
 
     void Start()
     {
-        SetCenterFreq(CenterFreq);
+        if (nextCenterFreq == 0)
+        {
+            nextCenterFreq = CenterFreq;
+        }
+        else
+        {
+            avarageFreq = nextCenterFreq;
+        }
+
+        SetCenterFreq(nextCenterFreq);
         StartCoroutine(InputStart());
     }
 
@@ -112,7 +124,13 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
             }
 
             var isVoiceMute = (volume / audioSource.volume) < ThresholdVolume;
+
             var rate = isVoiceMute ? 0 : Mathf.InverseLerp(Mathf.Log(LowFreq, 2), Mathf.Log(HighFreq, 2), Mathf.Log(freq, 2)); // 小さい音を無視
+
+            if (!isVoiceMute)
+            {
+                avarageFreq = Mathf.Lerp(avarageFreq, freq, 0.2f);
+            }
 
             if (OnUpdateVoiceInput != null)
             {
@@ -140,5 +158,15 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
         {
             OnUpdateCenterFreq(LowFreq, centerFreq, HighFreq);
         }
+    }
+
+    public void SaveCenterFreq(int centerFreq)
+    {
+        nextCenterFreq = centerFreq;
+    }
+
+    public void SaveAvarageFreq()
+    {
+        nextCenterFreq = (int)avarageFreq;
     }
 }
