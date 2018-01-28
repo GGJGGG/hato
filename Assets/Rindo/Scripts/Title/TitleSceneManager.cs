@@ -20,8 +20,11 @@ public class TitleSceneManager : MonoBehaviour
 
     TitleState state = TitleState.DisplayingStory;
 
+    float speed = 0.08f;
+
     public void OnSkipStory()
     {
+        Debug.Log("skipped");
         WaitForShout();
     }
 
@@ -42,37 +45,38 @@ public class TitleSceneManager : MonoBehaviour
 
     void Update()
     {
-        switch (state)
+        if (state == TitleState.DisplayingStory)
         {
-            case TitleState.DisplayingStory:
-                UpdateDisplay();
-                break;
-            case TitleState.WaitingForShout:
-                break;
-            case TitleState.Transitioning:
-                break;
+            UpdateDisplay();
         }
     }
 
     void UpdateDisplay()
     {
-        story.transform.Translate(0, 0, 0.05f);
-
-        if (story.transform.position.z > 25)
+        story.transform.Translate(0, 0, speed);
+        if (logo != null)
         {
-            if (logo != null && !logo.GetComponent<FadeOut>().hasStarted)
+            // logo.transform.Translate(0, 0, 0.05f);
+
+            if (logo.transform.position.z > 25 && !logo.GetComponent<FadeOut>().hasStarted)
             {
                 logo.GetComponent<FadeOut>().StartFadeOut();
+                speed = 0.03f;
             }
         }
 
-        if (story.transform.position.z > 60)
+        if (text != null)
         {
-            if (text != null && !text.GetComponent<FadeOut>().hasStarted)
+            // text.transform.Translate(0, 0, 0.05f);
+
+            if (text.transform.position.z > 20)
             {
-                text.GetComponent<FadeOut>().StartFadeOut();
+                if (!text.GetComponent<FadeOut>().hasStarted)
+                {
+                    text.GetComponent<FadeOut>().StartFadeOut();
+                }
+                WaitForShout();
             }
-            WaitForShout();
         }
     }
 
