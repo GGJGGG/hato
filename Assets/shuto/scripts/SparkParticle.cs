@@ -25,7 +25,7 @@ public class SparkParticle : MonoBehaviour {
             if (pl.faint == false)
             {
                 pl.FaintCheck();
-                pp.isPlaying = true;
+                pp.PlayParticle();
             }
         }
     }
