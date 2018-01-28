@@ -24,7 +24,6 @@ public class TitleSceneManager : MonoBehaviour
 
     public void OnSkipStory()
     {
-        Debug.Log("skipped");
         WaitForShout();
     }
 
@@ -56,8 +55,6 @@ public class TitleSceneManager : MonoBehaviour
         story.transform.Translate(0, 0, speed);
         if (logo != null)
         {
-            // logo.transform.Translate(0, 0, 0.05f);
-
             if (logo.transform.position.z > 25 && !logo.GetComponent<FadeOut>().hasStarted)
             {
                 logo.GetComponent<FadeOut>().StartFadeOut();
@@ -67,8 +64,6 @@ public class TitleSceneManager : MonoBehaviour
 
         if (text != null)
         {
-            // text.transform.Translate(0, 0, 0.05f);
-
             if (text.transform.position.z > 20)
             {
                 if (!text.GetComponent<FadeOut>().hasStarted)
@@ -83,6 +78,8 @@ public class TitleSceneManager : MonoBehaviour
     void WaitForShout()
     {
         if (state != TitleState.DisplayingStory) return;
+
+        TitleEventManager.Instance.WaitForShout();
 
         state = TitleState.WaitingForShout;
         shout.SetActive(true);
