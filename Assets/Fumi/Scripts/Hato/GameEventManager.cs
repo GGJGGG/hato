@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameEventManager : SingletonMonoBehaviour<GameEventManager>
 {
     public event Action OnPlayerDead;
+    public event Action OnClear;
     public event Action OnEnterLastArea;
     public event Action OnEnterGoalLine;
 
@@ -33,6 +34,14 @@ public class GameEventManager : SingletonMonoBehaviour<GameEventManager>
         if (OnPlayerDead != null)
         {
             OnPlayerDead();
+        }
+    }
+
+    public void GoalBomb()
+    {
+        if (OnClear != null)
+        {
+            OnClear();
         }
     }
 }

@@ -9,7 +9,13 @@ public class Bomb : MonoBehaviour
     [SerializeField] ParticleSystem deadEffect;
     [SerializeField] Renderer bomb;
 
+    Rigidbody rigid;
     bool goalHitted; //ゴールに当たったかどうか 
+
+    void Start()
+    {
+        rigid = GetComponent<Rigidbody>();
+    }
 
     void OnCollisionEnter(Collision collision)
     {
@@ -17,14 +23,23 @@ public class Bomb : MonoBehaviour
 
         var isHitGoal = collision.gameObject.layer == LayerMask.NameToLayer("Goal");
 
-        if (isHitGoal)
-        {
-            goalHitted = true;
-        }
-        else
+        if (!isHitGoal)
         {
             Debug.Log("ゴール以外にバームクーヘンが当たった " + collision.gameObject.name);
             Dead();
+        }
+    }
+
+    void OnEnable()
+    {
+        GameEventManager.Instance.OnClear += OnClear;
+    }
+
+    void OnDisable()
+    {
+        if (GameEventManager.Instance != null)
+        {
+            GameEventManager.Instance.OnClear -= OnClear;
         }
     }
 
@@ -33,11 +48,18 @@ public class Bomb : MonoBehaviour
     {
         var joint = GetComponent<FixedJoint>();
         Destroy(joint);
-        var col = GetComponent<Collider>();
-        col.enabled = false;
+        rigid.useGravity = true;
     }
 
-    public void PlayClearEffect(float rate = 1.0f)
+    void OnClear()
+    {
+        goalHitted = true;
+        rigid.useGravity = false;
+        rigid.isKinematic = true;
+        PlayClearEffect();
+    }
+
+    void PlayClearEffect(float rate = 1.0f)
     {
         var particleNum = (int)(100 * rate);
         clearEffect.Emit(particleNum);

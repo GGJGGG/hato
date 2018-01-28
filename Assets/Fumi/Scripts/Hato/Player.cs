@@ -80,7 +80,11 @@ public class Player : MonoBehaviour
         {
             InputVoice.Instance.OnUpdateVoiceInput -= OnUpdateVoiceInput;
         }
-        GameEventManager.Instance.OnPlayerDead -= OnPlayerDead;
+
+        if (GameEventManager.Instance != null)
+        {
+            GameEventManager.Instance.OnPlayerDead -= OnPlayerDead;
+        }
     }
 
     void OnUpdateVoiceInput(bool isMute, float rate, int freq, float power)
