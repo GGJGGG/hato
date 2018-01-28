@@ -16,22 +16,23 @@ public class GameSoundManager : MonoBehaviour
         GameEventManager.Instance.OnEnterLastArea += () =>
         {
             // TODO 綺麗につなぐ
-            bgm1.Stop();
+            StartCoroutine(bgm1.Fade(0, 0.5f));
             fill.Play();
-            Invoke("PlayBgm2", fill.clip.length);
+            Invoke("PlayBgm2", fill.clip.length - 0.05f);
         };
 
         GameEventManager.Instance.OnEnterGoalLine += () =>
         {
             //TODO フェードアウトとかしたほうが良さそう
-            bgm2.Stop();
+            fill.Stop();
+            StartCoroutine(bgm2.Fade(0, 1.0f));
         };
 
-        GameEventManager.Instance.OnPlayerDead += () => 
+        GameEventManager.Instance.OnPlayerDead += () =>
         {
-            bgm1.Stop();
-            fill.Stop();
-            bgm2.Stop();
+            StartCoroutine(bgm1.Fade(0, 0.1f));
+            StartCoroutine(fill.Fade(0, 0.1f));
+            StartCoroutine(bgm2.Fade(0, 0.1f));
         };
     }
 
