@@ -130,6 +130,7 @@ MonoBehaviour:
   _targetTransform: {fileID: 0}
   AddPosition: {x: 6, y: 4, z: -10}
   MulPosition: {x: 1, y: 0, z: 1}
+  EffectiveRate: 1
 --- !u!114 &114284931188289034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -141,6 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2973218016e4c83b2e0cfb32c03fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bomb: {fileID: 0}
 --- !u!124 &124160510635814480
 Behaviour:
   m_ObjectHideFlags: 1
