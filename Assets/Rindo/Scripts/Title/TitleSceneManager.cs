@@ -92,8 +92,13 @@ public class TitleSceneManager : MonoBehaviour
     {
         state = TitleState.Transitioning;
 
-        // TODO: 画面フェード？
+        TitleEventManager.Instance.StartTransition();
 
+        Invoke("TransitionToGame", 1.0f);
+    }
+
+    void TransitionToGame()
+    {
         SceneManager.LoadScene("Game");
     }
 }
