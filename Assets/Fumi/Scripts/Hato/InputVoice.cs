@@ -30,8 +30,11 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
         }
     }
 
-    public int LowFreq  = 150;
-    public int HighFreq = 800;
+    public int CenterFreq = 300;
+    public int FreqBandNumber = 13; // Freqの幅は13音分
+    int LowFreq  = 150;
+    int HighFreq = 800;
+
     public float ThresholdVolume = 1;
     public float PrevEffectRate = 0;
 
@@ -43,10 +46,13 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
     /// </summary>
     public event Action<bool, float, int, float> OnUpdateVoiceInput;
 
+    public event Action<int, int, int> OnUpdateCenterFreq;
+
     AudioSource audioSource;
 
     void Start()
     {
+        SetCenterFreq(CenterFreq);
         StartCoroutine(InputStart());
     }
 
@@ -95,7 +101,7 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
             }
 
             var freq = (int)(freqN * AudioSettings.outputSampleRate / 2 / spectrum.Length);
-            maxValue = maxValue / audioSource.volume < 0.0513f ? 0 : maxValue; // 無音のときにも0.0512が入る
+            maxValue = maxValue / audioSource.volume < 0.0650f ? 0 : maxValue; // 無音のときにもmacで0.0512が入る winで650くらいが安定してた
             var volume = maxValue / audioSource.volume;
             volume = Mathf.Lerp(volume, prevVolume, PrevEffectRate);
             freq = (int)Mathf.Lerp(freq, prevFreq, PrevEffectRate);
@@ -106,7 +112,7 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
             }
 
             var isVoiceMute = (volume / audioSource.volume) < ThresholdVolume;
-            var rate = isVoiceMute ? 0 : Mathf.InverseLerp(LowFreq, HighFreq, freq); // 小さい音を無視
+            var rate = isVoiceMute ? 0 : Mathf.InverseLerp(Mathf.Log(LowFreq, 2), Mathf.Log(HighFreq, 2), Mathf.Log(freq, 2)); // 小さい音を無視
 
             if (OnUpdateVoiceInput != null)
             {
@@ -117,6 +123,22 @@ public class InputVoice : SingletonMonoBehaviour<InputVoice>
             prevFreq = freq;
 
             yield return null;
+        }
+    }
+
+    /// <summary>
+    /// 判定の中央に使う周波数を登録します。
+    /// </summary>
+    public void SetCenterFreq(int centerFreq)
+    {
+        var rate = Mathf.Pow(1.059f, (FreqBandNumber - 1) / 2.0f);
+
+        LowFreq = (int)(centerFreq / rate);
+        HighFreq = (int)(centerFreq * rate);
+
+        if (OnUpdateCenterFreq != null)
+        {
+            OnUpdateCenterFreq(LowFreq, centerFreq, HighFreq);
         }
     }
 }

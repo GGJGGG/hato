@@ -9,11 +9,16 @@ public class InputPowerView : MonoBehaviour
     [SerializeField] Button button;
     [SerializeField] Text text;
 
+    [SerializeField] Text lowText;
+    [SerializeField] Text centerText;
+    [SerializeField] Text highText;
+
     void OnEnable()
     {
         if (InputVoice.Instance != null)
         {
             InputVoice.Instance.OnUpdateVoiceInput += OnUpdateVoiceInput;
+            InputVoice.Instance.OnUpdateCenterFreq += OnUpdateCenterFreq;
         }
     }
 
@@ -22,6 +27,7 @@ public class InputPowerView : MonoBehaviour
         if (InputVoice.Instance != null)
         {
             InputVoice.Instance.OnUpdateVoiceInput -= OnUpdateVoiceInput;
+            InputVoice.Instance.OnUpdateCenterFreq -= OnUpdateCenterFreq;
         }
     }
 
@@ -32,6 +38,18 @@ public class InputPowerView : MonoBehaviour
         rt.anchorMax = anchor;
         rt.anchoredPosition = new Vector3(8f, 0);
         button.interactable = !isMute;
-        text.text = string.Format("{0}Hz", freq);
+        text.text = ToFreqString(freq);
+    }
+
+    void OnUpdateCenterFreq(int lowFreq, int centerFreq, int highFreq)
+    {
+        lowText.text = ToFreqString(lowFreq);
+        centerText.text = ToFreqString(centerFreq);
+        highText.text = ToFreqString(highFreq);
+    }
+
+    string ToFreqString(int freq)
+    {
+        return freq == 0 ? "" : string.Format("{0}Hz", freq);
     }
 }
