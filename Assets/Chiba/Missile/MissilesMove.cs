@@ -13,7 +13,8 @@ public class MissilesMove : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        hitParticle.Emit(40);
+        //hitParticle.Emit(40);
+        hitParticle.Play(true);
         GetComponent<MeshRenderer>().enabled = false;
         var rb = GetComponent<Rigidbody>();
         rb.velocity = Vector3.zero;
