@@ -22,14 +22,17 @@ public class TitleSceneManager : MonoBehaviour
 
     public void OnSkipStory()
     {
-        if (state != TitleState.DisplayingStory)
-        {
-            return;
-        }
+        WaitForShout();
+    }
 
-        state = TitleState.WaitingForShout;
-        shout.SetActive(true);
-        story.SetActive(false);
+    void OnUpdateVoiceInput(bool isMute, float rate, int freq, float power)
+    {
+        if (state != TitleState.WaitingForShout) return;
+        if (isMute) return;
+
+        InputVoice.Instance.SaveCenterFreq(freq);
+
+        TransitionScene();
     }
 
     void Start()
@@ -69,12 +72,27 @@ public class TitleSceneManager : MonoBehaviour
             {
                 text.GetComponent<FadeOut>().StartFadeOut();
             }
-            TransitionScene();
+            WaitForShout();
         }
+    }
+
+    void WaitForShout()
+    {
+        if (state != TitleState.DisplayingStory) return;
+
+        state = TitleState.WaitingForShout;
+        shout.SetActive(true);
+        story.SetActive(false);
+
+        InputVoice.Instance.OnUpdateVoiceInput += OnUpdateVoiceInput;
     }
 
     void TransitionScene()
     {
+        state = TitleState.Transitioning;
+
+        // TODO: 画面フェード？
+
         SceneManager.LoadScene("Game");
     }
 }
