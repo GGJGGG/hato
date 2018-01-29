@@ -23,7 +23,7 @@ public static class AudioSourceExtension
             audio.volume = volume;
             if (t == 1.0f)
             {
-                yield break;
+                break;
             }
             yield return null;
         }
